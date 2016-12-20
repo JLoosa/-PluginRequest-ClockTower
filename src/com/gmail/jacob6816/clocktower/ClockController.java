@@ -44,7 +44,7 @@ public class ClockController implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command commandBase, String cmd, String[] args) {
 		if (!commandBase.getName().equals("ClockTower")) return false;
 		if (args.length < 1) {
-			sender.sendMessage("Missing arguments");
+			sender.sendMessage("No command provided. Use /ct <command>");
 			return true;
 		}
 		if (sender instanceof Player) {
@@ -59,11 +59,13 @@ public class ClockController implements CommandExecutor {
 			for (UUID id : activeTimers.keySet())
 				Bukkit.getPlayer(id).setScoreboard(sb);
 			activeTimers.clear();
+			sender.sendMessage("All timers cleared");
 			return true;
 		}
 
 		if (args.length < 1) {
-			sender.sendMessage("Missing arguments");
+			sender.sendMessage("Not enough arguments provided for this command");
+			sender.sendMessage("Use /ct " + cmd + " (params)");
 			return true;
 		}
 
@@ -75,6 +77,7 @@ public class ClockController implements CommandExecutor {
 				if (!activeTimers.containsKey(player.getUniqueId())) continue;
 				activeTimers.get(player.getUniqueId()).setPaused(!unpause);
 			}
+			sender.sendMessage("Target(s) have been " + (unpause ? "unpaused" : "paused"));
 			return true;
 		}
 		if (cmd.equals("stop")) {
@@ -86,11 +89,13 @@ public class ClockController implements CommandExecutor {
 					activeTimers.remove(player);
 				}
 			}
+			sender.sendMessage("Target timers have been stopped");
 			return true;
 		}
 
 		if (args.length < 2) {
-			sender.sendMessage("Missing arguments");
+			sender.sendMessage("Not enough arguments provided for this command");
+			sender.sendMessage("Use /ct " + cmd + " (params)");
 			return true;
 		}
 
@@ -108,6 +113,7 @@ public class ClockController implements CommandExecutor {
 				}
 				activeTimers.get(id).setTime(seconds);
 			}
+			sender.sendMessage("Target timers have been started for " + seconds + " seconds");
 			return true;
 		}
 		if (cmd.equals("add")) {
@@ -124,6 +130,7 @@ public class ClockController implements CommandExecutor {
 				}
 				activeTimers.get(id).addTime(seconds);
 			}
+			sender.sendMessage("Added " + seconds + " seconds to target timer(s)");
 			return true;
 		}
 		if (cmd.equals("set")) {
@@ -140,12 +147,16 @@ public class ClockController implements CommandExecutor {
 				}
 				activeTimers.get(id).setTime(seconds);
 			}
+			sender.sendMessage("Target timer(s) set to " + seconds + " seconds");
 			return true;
 		}
 		if (cmd.equals("get")) {
 			args = NotationHandler.appendNotations(sender, args, activeTimers.keySet());
 			Player player = Bukkit.getPlayer(args[0]);
-			if (player == null) return true;
+			if (player == null) {
+				sender.sendMessage("Could not find receiver");
+				return true;
+			}
 			for (UUID id : activeTimers.keySet()) {
 				Player temp = Bukkit.getPlayer(id);
 				String name = temp.getName();
@@ -158,6 +169,7 @@ public class ClockController implements CommandExecutor {
 				if (st.isPaused()) builder.append(" [paused]");
 				player.sendMessage(builder.toString().trim());
 			}
+			sender.sendMessage("List retrieved");
 			return true;
 		}
 		return false;
