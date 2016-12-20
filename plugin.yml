@@ -1,0 +1,9 @@
+name: ClockTower
+author: Jacob Ryan
+version: 1.0
+main: com.gmail.jacob6816.clocktower.ClockTower
+commands:
+  ClockTower:
+    description: ClockTower main command
+    usage: /ClockTower {args}
+    aliases: [ct]
