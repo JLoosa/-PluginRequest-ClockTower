@@ -1,12 +1,18 @@
 package com.gmail.jacob6816.clocktower;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+
+import com.github.ZombieStriker.CommandUtils;
 
 public class NotationHandler {
 
@@ -19,11 +25,14 @@ public class NotationHandler {
 	private NotationHandler() {
 	}
 
-	public static String[] appendNotations(String[] args, Set<UUID> playerSet) {
+	public static String[] appendNotations(CommandSender sender, String[] args, Set<UUID> playerSet) {
 		int lastPos = args.length - 1;
 		if (!args[lastPos].startsWith("@")) return args;
-		char target = args[lastPos].charAt(1);
-		String[] tempArr = getReturnArray(target, playerSet);
+		String[] tempArr = filterToPlayers(CommandUtils.getTargets(sender, args[lastPos]));
+		if (tempArr == null || tempArr.length == 0) {
+			char target = args[lastPos].charAt(1);
+			tempArr = getReturnArray(target, playerSet);
+		}
 		if (tempArr == null) return args;
 		String[] newArr = new String[args.length + tempArr.length - 1];
 		int pos = 0;
@@ -39,11 +48,19 @@ public class NotationHandler {
 		return newArr;
 	}
 
+	public static String[] filterToPlayers(Entity... entities) {
+		List<String> list = new ArrayList<String>();
+		for (Entity e : entities)
+			if (e instanceof Player)
+				list.add(((Player) e).getName());
+		return list.toArray(new String[list.size()]);
+	}
+
 	public static String[] getReturnArray(char key, Set<UUID> playerSet) {
-		if (key == 'a') return getLimitedPlayerList(playerSet);
-		if (key == 'A') return getPlayerList();
-		if (key == 'r') return getRandomLimitedPlayer(playerSet);
-		if (key == 'R') return getRandomPlayer();
+		if (key == 'g') return getLimitedPlayerList(playerSet);
+		if (key == 'G') return getPlayerList();
+		if (key == 't') return getRandomLimitedPlayer(playerSet);
+		if (key == 'T') return getRandomPlayer();
 		return null;
 	}
 

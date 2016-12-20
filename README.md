@@ -31,8 +31,8 @@ Prenote: This plugin is coded very simply and, as such, may feel lacking in some
 		get [receiver] [players]		# Sends the remaining times from all listed players to [receiver]
 
 	Allowed @ Terms:
-		#Note, using a capital letter (e.g. @A) uses a global scope, and will include players without active timers
-		@r								# Targets a random player with an active timer
-		@a								# Targets all players with an active timer
+		#Note, using a capital letter (e.g. @G) uses a global scope, and will include players without active timers
+		@t								# Targets a random player with an active timer
+		@g								# Targets all players with an active timer
 		
-		
+		Thanks to the hard work of ZombieStriker and his CommandUtils resource, this plugin can use all of the vanilla @ annotations as well at the plugin-specific @t and @g that I coded.

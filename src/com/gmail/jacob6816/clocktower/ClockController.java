@@ -68,7 +68,7 @@ public class ClockController implements CommandExecutor {
 		}
 
 		if (cmd.equals("pause")) {
-			args = NotationHandler.appendNotations(args, activeTimers.keySet());
+			args = NotationHandler.appendNotations(sender, args, activeTimers.keySet());
 			boolean unpause = args[0].equalsIgnoreCase("-u");
 			for (int i = (unpause ? 0 : 1); i < args.length; i++) {
 				Player player = Bukkit.getPlayer(args[i]);
@@ -78,7 +78,7 @@ public class ClockController implements CommandExecutor {
 			return true;
 		}
 		if (cmd.equals("stop")) {
-			args = NotationHandler.appendNotations(args, activeTimers.keySet());
+			args = NotationHandler.appendNotations(sender, args, activeTimers.keySet());
 			for (int i = 0; i < args.length; i++) {
 				Player player = Bukkit.getPlayer(args[i]);
 				if (activeTimers.containsKey(player.getUniqueId())) {
@@ -95,7 +95,7 @@ public class ClockController implements CommandExecutor {
 		}
 
 		if (cmd.equals("start")) {
-			args = NotationHandler.appendNotations(args, activeTimers.keySet());
+			args = NotationHandler.appendNotations(sender, args, activeTimers.keySet());
 			long seconds = Long.parseLong(args[0]);
 			for (int i = 1; i < args.length; i++) {
 				Player _p = Bukkit.getPlayer(args[i]);
@@ -111,7 +111,7 @@ public class ClockController implements CommandExecutor {
 			return true;
 		}
 		if (cmd.equals("add")) {
-			args = NotationHandler.appendNotations(args, activeTimers.keySet());
+			args = NotationHandler.appendNotations(sender, args, activeTimers.keySet());
 			long seconds = Long.parseLong(args[0]);
 			for (int i = 1; i < args.length; i++) {
 				Player _p = Bukkit.getPlayer(args[i]);
@@ -127,7 +127,7 @@ public class ClockController implements CommandExecutor {
 			return true;
 		}
 		if (cmd.equals("set")) {
-			args = NotationHandler.appendNotations(args, activeTimers.keySet());
+			args = NotationHandler.appendNotations(sender, args, activeTimers.keySet());
 			long seconds = Long.parseLong(args[0]);
 			for (int i = 1; i < args.length; i++) {
 				Player _p = Bukkit.getPlayer(args[i]);
@@ -143,7 +143,7 @@ public class ClockController implements CommandExecutor {
 			return true;
 		}
 		if (cmd.equals("get")) {
-			args = NotationHandler.appendNotations(args, activeTimers.keySet());
+			args = NotationHandler.appendNotations(sender, args, activeTimers.keySet());
 			Player player = Bukkit.getPlayer(args[0]);
 			if (player == null) return true;
 			for (UUID id : activeTimers.keySet()) {
