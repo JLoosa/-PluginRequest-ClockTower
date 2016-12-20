@@ -159,7 +159,8 @@ public class ClockController implements CommandExecutor {
 					builder.append(" ");
 				builder.append(" | ");
 				SimpleTimer st = activeTimers.get(id);
-				if (st.isPaused()) builder.append(" [p]");
+				builder.append(st.getTimeString());
+				if (st.isPaused()) builder.append(" [paused]");
 				player.sendMessage(builder.toString().trim());
 			}
 			return true;
