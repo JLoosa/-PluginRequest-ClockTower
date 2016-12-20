@@ -20,7 +20,7 @@ public class SimpleTimer {
 		this.seconds = Math.max(0, seconds);
 		this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 		ocjective = scoreboard.registerNewObjective("Time", "dummy");
-		ocjective.setDisplayName(ChatColor.AQUA + "Time Remaining: ");
+		ocjective.setDisplayName(ChatColor.AQUA + "Time Left: ");
 		ocjective.setDisplaySlot(DisplaySlot.SIDEBAR);
 	}
 
